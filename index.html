@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المذخوره - الفخامة والأصالة</title>
+    <meta name="description" content="متجر المذخوره يقدم أفضل وأفخر أنواع التمور العمانية العضوية.">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Identity Services -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <img src="logo.jpg" alt="المذخوره" style="height: 65px; object-fit: contain;"> <span>المذخوره</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home">الرئيسية</a></li>
+                <li><a href="#products">منتجاتنا</a></li>
+                <li><a href="#about">من نحن</a></li>
+                <li><a href="#contact">تواصل معنا</a></li>
+            </ul>
+        </nav>
+        <div class="nav-actions">
+            <!-- Google Sign-in / User Profile -->
+            <div class="google-auth-container" id="googleAuthContainer">
+                <button type="button" class="google-login-btn" id="googleLoginNavBtn">
+                    <i class="fa-brands fa-google"></i>
+                    <span>تسجيل الدخول</span>
+                </button>
+                <div class="user-profile-badge" id="userProfileBadge" style="display: none;">
+                    <button type="button" class="user-pill-btn" id="userPillBtn">
+                        <img id="userAvatarImg" src="" alt="المستخدم" class="user-avatar-img">
+                        <span id="userNameDisplay" class="user-name-display"></span>
+                        <i class="fa-solid fa-angle-down"></i>
+                    </button>
+                    <div class="user-dropdown-menu" id="userDropdownMenu">
+                        <div class="user-dropdown-header">
+                            <span id="userEmailDisplay" class="user-email-display"></span>
+                        </div>
+                        <button type="button" id="googleLogoutBtn" class="dropdown-logout-btn">
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i> تسجيل الخروج
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Button -->
+            <button type="button" class="settings-nav-btn" id="openSettingsBtn" title="إعدادات المتجر">
+                <i class="fa-solid fa-gear"></i>
+                <span>الإعدادات</span>
+            </button>
+
+            <!-- Cart Icon -->
+            <div class="cart-icon" id="cartIcon" title="سلة المشتريات">
+                <i class="fa-solid fa-basket-shopping"></i>
+                <span class="cart-count">0</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1>مذاق الأصالة والفخامة في كل تمرة</h1>
+                <p>أصالة • تعبر عن عراقة التمور العمانية.</p>
+                <a href="#products" class="btn-primary">تسوق الآن</a>
+            </div>
+        </section>
+
+        <section id="products" class="products-section">
+            <div class="section-header-row">
+                <h2>منتجاتنا المميزة</h2>
+            </div>
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be loaded dynamically from products.js / localStorage -->
+            </div>
+        </section>
+    </main>
+
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-logo">
+                المذخوره
+                <p>وجهتك الأولى لأفخر أنواع التمور العمانية</p>
+                <div class="contact-row">
+                    <img src="logo.jpg" alt="تواصل معنا" class="contact-small-img">
+                    <div class="contact-info-text">
+                        <strong>تواصل معنا مباشرة</strong>
+                        <span>نحن في خدمتك دائماً</span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>روابط سريعة</h4>
+                <ul>
+                    <li><a href="#home">الرئيسية</a></li>
+                    <li><a href="#products">المنتجات</a></li>
+                    <li><a href="javascript:void(0)" id="footerSettingsLink">إعدادات المتجر</a></li>
+                    <li><a href="#">سياسة الخصوصية</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h4>تواصل معنا</h4>
+                <div class="social-icons">
+                    <a href="https://www.instagram.com/almathkora_dates/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://wa.me/96895577026" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 المذخوره. جميع الحقوق محفوظة. | تصميم: <strong class="designer-name">المصمم يونس الصبحي</strong></p>
+        </div>
+    </footer>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h2>سلة المشتريات</h2>
+            <button class="close-cart" id="closeCart"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <div class="empty-cart-msg">السلة فارغة حالياً</div>
+        </div>
+        <div class="cart-footer">
+            <div class="total">
+                الإجمالي: <span class="total-price" id="totalPrice">٠ ر.ع.</span>
+            </div>
+            <button class="checkout-btn">إتمام الطلب</button>
+        </div>
+    </div>
+    
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Checkout Modal -->
+    <div class="checkout-modal" id="checkoutModal">
+        <div class="checkout-header">
+            <h2>إتمام الدفع</h2>
+            <button class="close-checkout" id="closeCheckout"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="checkout-body">
+            <form id="checkoutForm">
+                <div class="form-group">
+                    <label>الاسم الكامل</label>
+                    <input type="text" id="checkoutCustName" required placeholder="أدخل اسمك الكريم">
+                </div>
+                <div class="form-group">
+                    <label>رقم الهاتف</label>
+                    <input type="tel" id="checkoutCustPhone" required placeholder="05XXXXXXXX" dir="ltr">
+                </div>
+                <div class="form-group">
+                    <label>عنوان التوصيل</label>
+                    <textarea id="checkoutCustAddress" required placeholder="المدينة، الحي، الشارع..."></textarea>
+                </div>
+                
+                <div class="payment-methods">
+                    <h3>طريقة الدفع</h3>
+                    <div class="payment-options">
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="transfer" checked>
+                            <div class="option-content">
+                                <i class="fa-solid fa-mobile-screen-button"></i>
+                                <span>تحويل عبر الرقم</span>
+                            </div>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="cash">
+                            <div class="option-content">
+                                <i class="fa-solid fa-money-bill-wave"></i>
+                                <span>الدفع عند الاستلام</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="pay-btn">تأكيد ودفع <span id="checkoutTotal"></span></button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 1. Password Verification Modal for Accessing Settings (قفل الإعدادات) -->
+    <div class="modal-backdrop" id="settingsAuthModal">
+        <div class="modal-card auth-modal-card">
+            <div class="modal-header">
+                <div class="modal-header-title">
+                    <i class="fa-solid fa-lock gold-icon"></i>
+                    <h3>الدخول إلى الإعدادات</h3>
+                </div>
+                <button type="button" class="modal-close-btn" id="closeSettingsAuthModal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <p class="auth-desc">يرجى إدخال كلمة المرور للوصول إلى لوحة التحكم وإعدادات المتجر.</p>
+                <form id="settingsLoginForm">
+                    <div class="form-group">
+                        <label for="settingsPasswordInput">كلمة مرور الإعدادات</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" id="settingsPasswordInput" required placeholder="أدخل كلمة المرور" autocomplete="current-password">
+                            <button type="button" class="toggle-password-btn" data-target="settingsPasswordInput" title="إظهار/إخفاء"><i class="fa-solid fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <div class="auth-error-msg" id="settingsAuthError" style="display: none;"></div>
+                    <button type="submit" class="btn-primary-action w-100">
+                        <i class="fa-solid fa-right-to-bracket"></i> دخول
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Settings Control Panel Modal (لوحة التحكم والإعدادات) -->
+    <div class="modal-backdrop" id="settingsModal">
+        <div class="modal-card settings-modal-card">
+            <div class="modal-header">
+                <div class="modal-header-title">
+                    <i class="fa-solid fa-sliders gold-icon"></i>
+                    <h3>لوحة التحكم والإعدادات</h3>
+                </div>
+                <button type="button" class="modal-close-btn" id="closeSettingsModal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <!-- Settings Tabs Navigation -->
+            <div class="settings-tabs-nav">
+                <button type="button" class="settings-tab-btn active" data-tab="tabAddProduct">
+                    <i class="fa-solid fa-circle-plus"></i>
+                    <span>إضافة منتج جديد</span>
+                </button>
+                <button type="button" class="settings-tab-btn" data-tab="tabManageProducts">
+                    <i class="fa-solid fa-boxes-stacked"></i>
+                    <span>إدارة وحذف المنتجات (<span id="adminTotalProductsCount">0</span>)</span>
+                </button>
+                <button type="button" class="settings-tab-btn" data-tab="tabSecurity">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>الأمان وكلمات المرور</span>
+                </button>
+                <button type="button" class="settings-tab-btn" data-tab="tabGoogleConfig">
+                    <i class="fa-brands fa-google"></i>
+                    <span>تسجيل Google</span>
+                </button>
+                <button type="button" class="settings-tab-btn" data-tab="tabFirebase">
+                    <i class="fa-solid fa-cloud"></i>
+                    <span>سحاب Google Firebase ☁️</span>
+                </button>
+            </div>
+
+            <div class="settings-modal-body">
+                <!-- TAB 1: ADD PRODUCT (إضافة منتج) -->
+                <div class="settings-tab-content active" id="tabAddProduct">
+                    <!-- Live Disk Save Status Banner -->
+                    <div class="disk-status-banner" id="addProdDiskStatusBanner"></div>
+
+                    <form id="addProductForm">
+                        <div class="form-group">
+                            <label for="newProdName"><i class="fa-solid fa-tag"></i> اسم المنتج *</label>
+                            <input type="text" id="newProdName" placeholder="مثال: تمر سكري مفتل فاخر" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="newProdPrice"><i class="fa-solid fa-coins"></i> السعر بالريال العماني (ر.ع.) *</label>
+                                <input type="number" id="newProdPrice" step="0.1" min="0.1" placeholder="مثال: 9.5" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="newProdStockStatus"><i class="fa-solid fa-boxes-stacked"></i> حالة التوفر في المخزون *</label>
+                                <select id="newProdStockStatus" class="form-select">
+                                    <option value="in_stock" selected>متوفر في المخزون ✅</option>
+                                    <option value="out_of_stock">نفدت الكمية ❌</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="newProdDesc"><i class="fa-solid fa-align-right"></i> وصف المنتج</label>
+                            <textarea id="newProdDesc" rows="3" placeholder="أدخل وصفاً للمنتج، مميزاته، أو حجم العبوة..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fa-solid fa-image"></i> صورة المنتج *</label>
+                            <div class="image-upload-container">
+                                <label class="file-upload-zone" for="newProdImageFile">
+                                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                                    <span>انقر لاختيار صورة من جهازك</span>
+                                    <small>أو اسحب وأفلت الصورة هنا</small>
+                                    <input type="file" id="newProdImageFile" accept="image/*">
+                                </label>
+                                <div class="upload-divider"><span>أو</span></div>
+                                <div class="url-input-wrapper">
+                                    <input type="url" id="newProdImageUrl" placeholder="أدخل رابط صورة مباشر من الإنترنت (URL)...">
+                                </div>
+                            </div>
+                            <!-- Image Preview Area -->
+                            <div class="image-preview-box" id="imagePreviewBox" style="display: none;">
+                                <div class="preview-title">معاينة صورة المنتج:</div>
+                                <img id="imagePreviewImg" src="" alt="معاينة الصورة">
+                                <button type="button" id="removePreviewImgBtn" class="btn-remove-preview">
+                                    <i class="fa-solid fa-trash-can"></i> إزالة الصورة
+                                </button>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-primary-action w-100" id="saveProductBtn">
+                            <i class="fa-solid fa-plus"></i> إضافة المنتج للمتجر الآن
+                        </button>
+                    </form>
+                </div>
+
+                <!-- TAB 2: MANAGE & DELETE PRODUCTS (إدارة وحذف المنتجات) -->
+                <div class="settings-tab-content" id="tabManageProducts">
+                    <!-- GitHub Sync Banner for exporting products.js directly into code files -->
+                    <div class="github-sync-banner">
+                        <div class="github-sync-info">
+                            <i class="fa-brands fa-github github-icon-badge"></i>
+                            <div>
+                                <strong>حفظ التغييرات في ملفات المشروع لـ GitHub:</strong>
+                                <p>لكي تظهر المنتجات والتعديلات التي تجريها بشكل دائم على جيت هب ولجميع الزوار، اضغط هنا لتحميل ملف <code>products.js</code> المحدث واستبدله في مجلد مشروعك قبل الرفع.</p>
+                            </div>
+                        </div>
+                        <div class="github-sync-actions">
+                            <button type="button" id="downloadProductsJsBtn" class="btn-github-download">
+                                <i class="fa-solid fa-file-arrow-down"></i> تحميل ملف products.js لـ GitHub
+                            </button>
+                            <button type="button" id="copyProductsJsBtn" class="btn-github-copy">
+                                <i class="fa-solid fa-copy"></i> نسخ كود الملف
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="manage-info-banner">
+                        <i class="fa-solid fa-shield-halved gold-icon"></i>
+                        <div>
+                            <strong>حماية الحذف مفعلة:</strong>
+                            <p>عند النقر على زر الحذف، سيُطلب منك إدخال كلمة مرور الحذف لحماية المتجر من الحذف بالخطأ.</p>
+                        </div>
+                    </div>
+                    <div class="manage-actions-bar">
+                        <button type="button" id="resetDefaultsBtn" class="btn-secondary-action">
+                            <i class="fa-solid fa-rotate-left"></i> استعادة المنتجات الافتراضية
+                        </button>
+                    </div>
+                    <div class="admin-products-list" id="adminProductsList">
+                        <!-- Loaded dynamically -->
+                    </div>
+                </div>
+
+                <!-- TAB 3: SECURITY & PASSWORDS (الأمان وكلمات المرور) -->
+                <div class="settings-tab-content" id="tabSecurity">
+                    <!-- Change Entry Password -->
+                    <div class="security-box">
+                        <div class="security-box-header">
+                            <i class="fa-solid fa-key gold-icon"></i>
+                            <div>
+                                <h4>كلمة مرور دخول الإعدادات</h4>
+                                <p>كلمة المرور المطلوبة لفتح لوحة التحكم والإعدادات.</p>
+                            </div>
+                        </div>
+                        <form id="changeLoginPasswordForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>كلمة المرور الحالية</label>
+                                    <input type="password" id="currentLoginPass" placeholder="أدخل كلمة المرور الحالية" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>كلمة المرور الجديدة</label>
+                                    <input type="password" id="newLoginPass" placeholder="أدخل كلمة مرور جديدة" required minlength="4">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn-secondary-action">
+                                <i class="fa-solid fa-floppy-disk"></i> تحديث كلمة مرور الدخول
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Change Delete Password -->
+                    <div class="security-box">
+                        <div class="security-box-header">
+                            <i class="fa-solid fa-trash-can-arrow-up gold-icon"></i>
+                            <div>
+                                <h4>كلمة مرور حذف المنتجات</h4>
+                                <p>كلمة المرور المطلوبة لتأكيد مسح أو حذف أي منتج من المتجر.</p>
+                            </div>
+                        </div>
+                        <form id="changeDeletePasswordForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>كلمة مرور الحذف الحالية</label>
+                                    <input type="password" id="currentDeletePass" placeholder="أدخل كلمة مرور الحذف الحالية" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>كلمة مرور الحذف الجديدة</label>
+                                    <input type="password" id="newDeletePass" placeholder="أدخل كلمة مرور حذف جديدة" required minlength="4">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn-secondary-action">
+                                <i class="fa-solid fa-floppy-disk"></i> تحديث كلمة مرور الحذف
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- TAB 4: GOOGLE AUTH CONFIG -->
+                <div class="settings-tab-content" id="tabGoogleConfig">
+                    <div class="security-box">
+                        <div class="security-box-header">
+                            <i class="fa-brands fa-google gold-icon"></i>
+                            <div>
+                                <h4>إعدادات تسجيل Google (Google OAuth)</h4>
+                                <p>ربط معرف العميل المعتمد لدى Google لتشغيل تسجيل الدخول المباشر بالنافذة المنبثقة من Google.</p>
+                            </div>
+                        </div>
+                        <form id="googleConfigForm">
+                            <div class="form-group">
+                                <label for="googleClientIdInput">Google Client ID</label>
+                                <input type="text" id="googleClientIdInput" placeholder="أدخل معرف عميل Google (مثال: xxxx.apps.googleusercontent.com)">
+                                <div class="password-hint">اتركه فارغاً لاستخدام وضع تسجيل الدخول السريع التفاعلي الافتراضي.</div>
+                            </div>
+                            <button type="submit" class="btn-secondary-action">
+                                <i class="fa-solid fa-floppy-disk"></i> حفظ المعرف
+                            </button>
+                        </form>
+
+                        <div class="google-info-card">
+                            <h5><i class="fa-solid fa-circle-check"></i> جاهز للاستخدام الفوري:</h5>
+                            <p>يمكن لأي عميل الآن النقر على زر "تسجيل الدخول" في أعلى الموقع وتسجيل دخوله بنقرة واحدة كحساب Google أو تجريبياً لحفظ اسمه وعنوانه تلقائياً في سلة الشراء.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 5: GOOGLE FIREBASE CLOUD SYNC -->
+                <div class="settings-tab-content" id="tabFirebase">
+                    <div class="security-box">
+                        <div class="security-box-header">
+                            <i class="fa-solid fa-cloud gold-icon"></i>
+                            <div>
+                                <h4>الربط المباشر بسحاب Google Firebase</h4>
+                                <p>حفظ المنتجات والأسعار والصور تلقائياً في سحاب جوجل ليراها كل الزوار فوراً وبدون لمس GitHub نهائياً!</p>
+                            </div>
+                        </div>
+
+                        <!-- Live Status Banner -->
+                        <div id="firebaseLiveStatusBanner" class="firebase-status-card not-connected">
+                            <div class="firebase-status-dot"></div>
+                            <div class="firebase-status-text">
+                                <strong id="firebaseStatusTitle">حالة السحاب: غير متصل (يعمل بالنظام المحلي) 🟡</strong>
+                                <p id="firebaseStatusDesc">التعديلات تنحفظ حالياً داخل متصفحك وجهازك. لربط سحاب Google Firebase للحفظ التلقائي المباشر، اتبع الخطوات السهلة أدناه.</p>
+                            </div>
+                        </div>
+
+                        <form id="firebaseConfigForm">
+                            <div class="form-group">
+                                <label for="firebaseConfigJson">كود إعدادات Firebase (firebaseConfig)</label>
+                                <textarea id="firebaseConfigJson" rows="6" placeholder="الصق كود firebaseConfig هنا مباشرة، مثال:
+{
+  &quot;apiKey&quot;: &quot;AIzaSy...&quot;,
+  &quot;authDomain&quot;: &quot;your-app.firebaseapp.com&quot;,
+  &quot;projectId&quot;: &quot;your-app&quot;,
+  &quot;storageBucket&quot;: &quot;your-app.appspot.com&quot;,
+  &quot;messagingSenderId&quot;: &quot;123456789&quot;,
+  &quot;appId&quot;: &quot;1:1234:web:abcd&quot;
+}"></textarea>
+                                <div class="password-hint">يمكنك نسخ الكود كما هو من موقع Firebase ولصقه هنا، وسيقوم المتجر بالاتصال تلقائياً!</div>
+                            </div>
+                            <div class="firebase-action-btns">
+                                <button type="submit" class="btn-primary-action">
+                                    <i class="fa-solid fa-cloud-arrow-up"></i> حفظ وتفعيل سحاب Firebase 🚀
+                                </button>
+                                <button type="button" id="disconnectFirebaseBtn" class="btn-cancel" style="display: none;">
+                                    <i class="fa-solid fa-power-off"></i> إلغاء الربط والرجوع للنظام المحلي
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- Step-by-step simple instructions -->
+                        <div class="firebase-guide-box">
+                            <h5><i class="fa-solid fa-graduation-cap gold-icon"></i> كيف تحصل على كود Firebase المجاني في دقيقتين؟</h5>
+                            <ol>
+                                <li>افتح موقع <strong><a href="https://console.firebase.google.com" target="_blank" style="color: var(--primary-color); text-decoration: underline;">console.firebase.google.com</a></strong> وسجل بحساب Google الخاص بك.</li>
+                                <li>اضغط على <strong>Create a project</strong> (إنشاء مشروع) واكتب أي اسم تحبه (مثلاً: <code>almathkora</code>).</li>
+                                <li>من القائمة الجانبية اضغط <strong>Build</strong> ثم <strong>Firestore Database</strong> واضغط <strong>Create database</strong> (اختر Start in test mode).</li>
+                                <li>اضغط على علامة الترس ⚙️ (Project settings) بجانب كلمة Project Overview، وانزل لأسفل واضغط على أيقونة الويب <strong><code>&lt;/&gt;</code></strong>، سيعطيك كود <code>firebaseConfig</code> انسخه والصقه في المربع أعلاه واضغط حفظ!</li>
+                            </ol>
+                            <p class="guide-note">💡 أو يمكنك إرسال المفاتيح لي هنا في المحادثة وسأقوم بتركيبها لك في ملفات الموقع فوراً!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Password Verification Modal for Deleting Product (تأكيد الحذف بكلمة المرور) -->
+    <div class="modal-backdrop" id="deleteConfirmModal">
+        <div class="modal-card delete-modal-card">
+            <div class="modal-header delete-header">
+                <div class="modal-header-title">
+                    <i class="fa-solid fa-triangle-exclamation delete-icon"></i>
+                    <h3>تأكيد حذف المنتج</h3>
+                </div>
+                <button type="button" class="modal-close-btn" id="closeDeleteConfirmModal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="delete-product-target-box">
+                    <span class="delete-label">المنتج المراد حذفه:</span>
+                    <strong id="deleteTargetProductName" class="delete-name"></strong>
+                </div>
+                <p class="delete-instruction">لحماية المتجر، يرجى إدخال <strong>كلمة مرور الحذف</strong> لتأكيد عملية الحذف نهائياً:</p>
+                
+                <form id="deleteConfirmForm">
+                    <input type="hidden" id="deleteTargetProductId">
+                    <div class="form-group">
+                        <div class="password-input-wrapper">
+                            <input type="password" id="deleteConfirmPasswordInput" required placeholder="أدخل كلمة مرور الحذف">
+                            <button type="button" class="toggle-password-btn" data-target="deleteConfirmPasswordInput" title="إظهار/إخفاء"><i class="fa-solid fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <div class="auth-error-msg" id="deleteAuthError" style="display: none;"></div>
+                    <div class="modal-actions-row">
+                        <button type="button" class="btn-cancel" id="cancelDeleteBtn">إلغاء</button>
+                        <button type="submit" class="btn-danger-action">
+                            <i class="fa-solid fa-trash-can"></i> تأكيد الحذف
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. Edit Product Modal (نافذة تعديل المنتج) -->
+    <div class="modal-backdrop" id="editProductModal">
+        <div class="modal-card edit-modal-card">
+            <div class="modal-header">
+                <div class="modal-header-title">
+                    <i class="fa-solid fa-pen-to-square gold-icon"></i>
+                    <h3>تعديل بيانات المنتج</h3>
+                </div>
+                <button type="button" class="modal-close-btn" id="closeEditProductModal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="editProductForm">
+                    <input type="hidden" id="editProdId">
+
+                    <div class="form-group">
+                        <label for="editProdName"><i class="fa-solid fa-tag"></i> اسم المنتج *</label>
+                        <input type="text" id="editProdName" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="editProdPrice"><i class="fa-solid fa-coins"></i> السعر بالريال العماني (ر.ع.) *</label>
+                            <input type="number" id="editProdPrice" step="0.1" min="0.1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editProdStockStatus"><i class="fa-solid fa-boxes-stacked"></i> حالة التوفر في المخزون *</label>
+                            <select id="editProdStockStatus" class="form-select">
+                                <option value="in_stock">متوفر في المخزون ✅</option>
+                                <option value="out_of_stock">نفدت الكمية ❌</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editProdDesc"><i class="fa-solid fa-align-right"></i> وصف المنتج</label>
+                        <textarea id="editProdDesc" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fa-solid fa-image"></i> صورة المنتج</label>
+                        <div class="edit-image-current-wrapper">
+                            <img id="editProdCurrentImgPreview" src="" alt="معاينة صورة المنتج">
+                            <div class="edit-image-actions">
+                                <label class="btn-change-img" for="editProdImageFile">
+                                    <i class="fa-solid fa-cloud-arrow-up"></i> اختيار صورة جديدة من الجهاز
+                                    <input type="file" id="editProdImageFile" accept="image/*" style="display: none;">
+                                </label>
+                                <input type="url" id="editProdImageUrl" placeholder="أو أدخل رابط صورة جديد (URL)...">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-actions-row">
+                        <button type="button" class="btn-cancel" id="cancelEditProdBtn">إلغاء</button>
+                        <button type="submit" class="btn-primary-action">
+                            <i class="fa-solid fa-floppy-disk"></i> حفظ التعديلات
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. Google Sign-In Modal (نافذة تسجيل الدخول بجوجل) -->
+    <div class="modal-backdrop" id="googleSignInModal">
+        <div class="modal-card google-modal-card">
+            <div class="modal-header">
+                <div class="modal-header-title">
+                    <i class="fa-brands fa-google google-brand-icon"></i>
+                    <h3>تسجيل الدخول بحساب Google</h3>
+                </div>
+                <button type="button" class="modal-close-btn" id="closeGoogleSignInModal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <p class="google-modal-desc">اربط حسابك مع Google لتسجيل الدخول السريع وتعبئة بيانات التوصيل تلقائياً.</p>
+
+                <!-- GIS Official Container & Direct Google OAuth Button -->
+                <div class="google-connect-box">
+                    <div id="gisButtonWrapper" class="gis-button-wrapper"></div>
+                    <button type="button" class="real-google-direct-btn" id="realGoogleDirectBtn">
+                        <svg width="22" height="22" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+                        <span>المتابعة عبر حساب Google الرسمي</span>
+                    </button>
+                </div>
+
+                <div class="or-divider"><span>أو تسجيل دخول يدوي سريع</span></div>
+
+                <form id="quickGoogleLoginForm">
+                    <div class="form-group">
+                        <label for="quickGoogleName">الاسم الكريم</label>
+                        <input type="text" id="quickGoogleName" placeholder="مثال: يونس المعمري" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="quickGoogleEmail">البريد الإلكتروني (Gmail)</label>
+                        <input type="email" id="quickGoogleEmail" placeholder="example@gmail.com" required>
+                    </div>
+                    <button type="submit" class="btn-google-action w-100">
+                        <i class="fa-brands fa-google"></i> متابعة بحساب Google
+                    </button>
+                </form>
+
+                <div class="demo-login-section">
+                    <span>تجربة سريعة بنقرة واحدة:</span>
+                    <button type="button" class="demo-chip-btn" id="demoUserOneClickBtn">
+                        <i class="fa-solid fa-user-check"></i> دخول كحساب تجريبي (أحمد المعمري)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Toast Notification System -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Google Firebase Cloud SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+
+    <script src="products.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
